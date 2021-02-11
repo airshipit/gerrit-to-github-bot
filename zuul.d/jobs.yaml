@@ -1,0 +1,22 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+- job:
+    name: airship-g2gbot-upload-git-mirror
+    parent: upload-git-mirror
+    description: Mirrors airship/gerrit-to-github-bot to airshipit/gerrit-to-github-bot
+    vars:
+      git_mirror_repository: airshipit/gerrit-to-github-bot
+    secrets:
+      - name: git_mirror_credentials
+        secret: airship_g2gbot_airshipit_github_secret
+        pass-to-parent: true
