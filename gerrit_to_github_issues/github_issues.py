@@ -73,7 +73,7 @@ def get_client(github_user: str, github_pw: str, github_token: str) -> github.Gi
 
 def get_bot_comment(issue: Issue, bot_name: str, ps_number: str) -> IssueComment:
     for i in issue.get_comments():
-        if i.user.login == bot_name and ps_number in i.body:
+        if i.user.login == bot_name and str(ps_number) in i.body:
             return i
 
 
@@ -108,7 +108,7 @@ def try_assign(issue: github.Issue):
         for assignee in old_assignees:
             issue.remove_from_assignees(assignee)
         issue.add_to_assignees(assignment_request.user)
-        comment_body = f'unassigned: {", ".join([a for a in old_assignees])}\n' + \
+        comment_body = f'unassigned: {", ".join([str(a) for a in old_assignees])}\n' + \
                        f'assigned: {assignment_request.user.login}'
         issue.create_comment(comment_body)
         return

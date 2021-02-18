@@ -154,10 +154,10 @@ def move_issue(project_board: Project, issue: Issue, to_col_name: str):
         return
 
     if not card:
-        LOG.warning(f'Issue with name "{issue.name}" could not be found for project "{project_board.name}"')
+        LOG.warning(f'Issue with name "{issue.title}" could not be found for project "{project_board.name}"')
         return
 
     if card.move("top", to_col):
-        LOG.info(f'Moved issue "{issue.name}" to column "{to_col_name}"')
+        LOG.info(f'Moved issue "{issue.title}" to column "{to_col_name}"')
     else:
-        LOG.warning(f'Failed to move issue "{issue.name}" to column "{to_col_name}"')
+        LOG.warning(f'Failed to move issue "{issue.title}" to column "{to_col_name}"')
