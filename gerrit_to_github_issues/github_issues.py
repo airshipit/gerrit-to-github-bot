@@ -78,8 +78,9 @@ def get_bot_comment(issue: Issue, bot_name: str, ps_number: str) -> IssueComment
 
 
 def assign_issues(repo: github.Repository):
-    open_issues = [i for i in repo.get_issues() if i.state == 'open']
-    for issue in open_issues:
+    open_unassigned_issues = [i for i in repo.get_issues(
+    ) if i.state == 'open' and len(i.assignees) == 0]
+    for issue in open_unassigned_issues:
         try_assign(issue)
 
 
