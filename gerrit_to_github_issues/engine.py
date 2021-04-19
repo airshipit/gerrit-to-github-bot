@@ -116,14 +116,19 @@ def add_comments(gh: github.Github, change: dict, affected_issues: dict,
                 return
 
             comment_msg = get_issue_comment(change, key, skip_approvals)
-            if issue.state == 'closed':
-                LOG.debug(f'Issue #{issue_number} was closed, reopening...')
+            # Disable this feature to reopen issue on any gerrit activity on closed issue
+            # Issues identified:
+            #   1. When an old PS (tagged with closed issue number) is abandoned, it reopens the issue
+            #   2. post/promote job events are also considered as some gerrit activity on a
+            #       closed issue and is reopened in the next immediate run of bot
+            #if issue.state == 'closed':
+            #    LOG.debug(f'Issue #{issue_number} was closed, reopening...')
 
                 # NOTE(howell): Reopening a closed issue will move it from the
                 # "Done" column to the "In Progress" column on the project
                 # board via Github automation.
-                issue.edit(state='open')
-                comment_msg += '\n\nIssue reopened due to new activity on Gerrit.'
+            #    issue.edit(state='open')
+            #    comment_msg += '\n\nIssue reopened due to new activity on Gerrit.'
 
             bot_comment = github_issues.get_bot_comment(issue, gh.get_user().login, change['number'])
             if not bot_comment:
